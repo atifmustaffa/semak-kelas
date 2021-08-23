@@ -2,6 +2,12 @@
 const {app, BrowserWindow} = require('electron')
 const path = require('path')
 
+// Enable live reload for Electron too
+require('electron-reload')(__dirname, {
+    // Note that the path to electron may vary according to the main file
+    // electron: require(`${__dirname}/node_modules/electron`)
+})
+
 function createWindow () {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
@@ -13,7 +19,8 @@ function createWindow () {
   })
 
   // and load the index.html of the app.
-  mainWindow.loadFile('index.html')
+  // mainWindow.loadFile('index.html')
+  mainWindow.loadURL(`file://${__dirname}/index.html`);
 
   // Open the DevTools.
   // mainWindow.webContents.openDevTools()
