@@ -131,6 +131,11 @@ button {
   background-image: linear-gradient(210deg, #7e8dff, #61ceff);
 }
 
+.gradient-red {
+  background-image: -webkit-linear-gradient(210deg, #e86b98, #bb4969);
+  background-image: linear-gradient(210deg, #e86b98, #bb4969);
+}
+
 .table {
   --bs-table-hover-bg: rgb(193 251 255 / 43%);
 }

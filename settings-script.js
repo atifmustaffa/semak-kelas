@@ -1,5 +1,6 @@
 // eslint-disable-next-line no-undef
 let _api = api
+
 let classList = []
 
 const printClass = () => {
@@ -104,6 +105,22 @@ _api.ipcRenderer.invoke('getStoreValue', 'classList').then((result) => {
 document.getElementById('save-btn').addEventListener('click', () => {
   _api.ipcRenderer.invoke('setStoreValue', 'classList', classList).then(() => {
     console.log('stored')
+    // Get the snackbar DIV
+    var x = document.getElementById('snackbar')
+
+    // Add the "show" class to DIV
+    x.classList.add('show')
+
+    let color = 'gradient-blue'
+    if (x.classList.contains('snackbar-danger')) color = 'gradient-red'
+
+    x.classList.add(color)
+
+    // After 3 seconds, remove the show class from DIV
+    setTimeout(function () {
+      x.classList.remove('show')
+      x.classList.remove(color)
+    }, 3000)
   })
 })
 
