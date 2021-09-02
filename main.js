@@ -29,22 +29,7 @@ function createWindow() {
   mainWindow.loadURL(`file://${__dirname}/index.html`)
 
   // Open the DevTools.
-  // mainWindow.webContents.openDevTools()
-
-  // workerWindow = new BrowserWindow()
-  // workerWindow.setTitle('workerwindow')
-  // workerWindow.loadURL('file://' + __dirname + '/printerWindow.html')
-  // workerWindow.hide()
-
-  // mainWindow.on('closed', () => {
-  //   // close worker windows later
-  //   mainWindow = undefined
-  //   workerWindow.close()
-  // })
-
-  // workerWindow.on('closed', () => {
-  //   workerWindow = undefined
-  // })
+  mainWindow.webContents.openDevTools()
 }
 
 // This method will be called when Electron has finished

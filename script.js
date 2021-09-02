@@ -80,8 +80,9 @@ const json2csv = (data, delimiter = ',') => {
   )
 }
 
-const lineSeparator = '\r\n'
+const lineSeparator = '\n'
 const columnSeparator = ','
+const aliasSeparator = ' @ '
 
 const checkNames = (csvStr) => {
   return new Promise((resolve, reject) => {
@@ -92,41 +93,34 @@ const checkNames = (csvStr) => {
       let cols = rows[x].split(columnSeparator)
       for (let y = 0; y < cols.length; y++) {
         if (cols[y] !== '') {
-          let username = cols[y].replace(/(^\"+|\"+$)/g, '')
-          let lastWord = username.substring(username.lastIndexOf(' ') + 1)
-          let className = username.substring(0, 4)
-          let hasClassName = false
-          switch (className) {
-            case '(2T)':
-            case '(3M)':
-            case '(3T)':
-              hasClassName = true
-              break
-          }
+          // cols[y] = cols[y].replace(/(^\"+|\"+$)/g, '')
+          cols[y] = cols[y].replace(/\"/g, '')
 
-          if (!hasClassName) {
-            let keys = Object.keys(names)
-            for (let i = 0; i < keys.length; i++) {
-              let key = keys[i]
-              let foundIndex = names[key].findIndex((n) => {
-                if (lastWord === 'Moe') {
-                  return (
-                    n.toLowerCase() ===
-                    username
-                      .substring(0, username.lastIndexOf(' '))
-                      .toLowerCase()
-                  )
-                } else {
-                  return n.toLowerCase() === username.toLowerCase()
-                }
+          // Stop columns search after second for better perf
+          if (y > 2) break
+
+          let keys = Object.keys(names)
+          for (let i = 0; i < keys.length; i++) {
+            let key = keys[i]
+            const findIndexFn = (arr, val) => {
+              let useAlias = ''
+              let foundIndex = arr.findIndex((n) => {
+                let aliases = n.split(aliasSeparator)
+                return (
+                  aliases.findIndex((a, index) => {
+                    let isFound = val.toLowerCase().includes(a.toLowerCase())
+                    useAlias = isFound && index > 0 ? ' - ' + aliases[0] : ''
+                    return isFound
+                  }) >= 0 || false
+                )
               })
-              if (foundIndex >= 0) {
-                // If name is found within names
-                cols[y] = '(' + key.toUpperCase() + ') ' + username
-                break
-              } else {
-                cols[y] = username
-              }
+              return { foundIndex, useAlias }
+            }
+            let { foundIndex, useAlias } = findIndexFn(names[key], cols[y])
+            if (foundIndex >= 0) {
+              // If name is found within names
+              cols[y] = '(' + key.toUpperCase() + ') ' + cols[y] + useAlias
+              break
             }
           }
         }
