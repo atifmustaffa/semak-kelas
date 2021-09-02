@@ -89,43 +89,31 @@ const checkNames = (csvStr) => {
     let rowsStr = Array()
     let rows = csvStr.split(lineSeparator)
     for (let x = 0; x < rows.length; x++) {
-      // let colsStr = Array()
-      let cols = rows[x].split(columnSeparator)
-      for (let y = 0; y < cols.length; y++) {
-        if (cols[y] !== '') {
-          // cols[y] = cols[y].replace(/(^\"+|\"+$)/g, '')
-          cols[y] = cols[y].replace(/\"/g, '')
-
-          // Stop columns search after second for better perf
-          if (y > 2) break
-
-          let keys = Object.keys(names)
-          for (let i = 0; i < keys.length; i++) {
-            let key = keys[i]
-            const findIndexFn = (arr, val) => {
-              let useAlias = ''
-              let foundIndex = arr.findIndex((n) => {
-                let aliases = n.split(aliasSeparator)
-                return (
-                  aliases.findIndex((a, index) => {
-                    let isFound = val.toLowerCase().includes(a.toLowerCase())
-                    useAlias = isFound && index > 0 ? ' - ' + aliases[0] : ''
-                    return isFound
-                  }) >= 0 || false
-                )
-              })
-              return { foundIndex, useAlias }
-            }
-            let { foundIndex, useAlias } = findIndexFn(names[key], cols[y])
+      let keys = Object.keys(names)
+      for (let i = 0; i < keys.length; i++) {
+        let key = keys[i]
+        let foundIndex = -1
+        for (let n of names[key]) {
+          let aliases = n.split(aliasSeparator)
+          for (let [index, a] of aliases.entries()) {
+            let alias = undefined
+            foundIndex = rows[x]
+              .replace(/,/g, ' ')
+              .toLowerCase()
+              .indexOf(a.toLowerCase())
             if (foundIndex >= 0) {
-              // If name is found within names
-              cols[y] = '(' + key.toUpperCase() + ') ' + cols[y] + useAlias
+              alias = foundIndex >= 0 && index > 0 ? aliases[0] : undefined
+              rows[x] =
+                ' (' + key + ') ' + (alias ? alias + ' - ' : '') + rows[x]
               break
             }
           }
+          if (foundIndex >= 0) break
         }
+        if (foundIndex >= 0) break
       }
-      rowsStr.push(cols.join(columnSeparator))
+      rows[x] = rows[x].replace(/\"/g, '')
+      rowsStr.push(rows[x])
     }
     resolve(rowsStr.join(lineSeparator))
   })
