@@ -277,12 +277,6 @@ document.getElementById('download-btn').addEventListener('click', () => {
   }
 })
 
-// Dev link
-document.getElementById('dev-link').addEventListener('click', (event) => {
-  event.preventDefault()
-  api.handleExternalLinks('https://twitter.com/atifmustaffa')
-})
-
 // Enable BS Tooltip
 var tooltipTriggerList = [].slice.call(
   document.querySelectorAll('[data-bs-toggle="tooltip"]')

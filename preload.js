@@ -55,10 +55,18 @@ window.addEventListener('DOMContentLoaded', () => {
       })
     })
   }
+  // Handle link to open externally
+  document.querySelectorAll('a[data-open="external"]').forEach((anchorElem) => {
+    anchorElem.addEventListener('click', (event) => {
+      event.preventDefault()
+      handleExternalLinks(event.target)
+    })
+  })
 })
 
-const handleExternalLinks = (url) => {
-  shell.openExternal(url)
+const handleExternalLinks = (anchorElem) => {
+  if (anchorElem && anchorElem.href && anchorElem.href !== '')
+    shell.openExternal(anchorElem.href)
 }
 
 contextBridge.exposeInMainWorld('api', {
