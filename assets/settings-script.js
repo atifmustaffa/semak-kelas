@@ -131,3 +131,12 @@ document.getElementById('remove-all-btn').addEventListener('click', () => {
     printClass()
   })
 })
+
+// Enable BS Tooltip
+var tooltipTriggerList = [].slice.call(
+  document.querySelectorAll('[data-bs-toggle="tooltip"]')
+)
+tooltipTriggerList.map(function (tooltipTriggerEl) {
+  // eslint-disable-next-line no-undef
+  return new bootstrap.Tooltip(tooltipTriggerEl)
+})

@@ -10,6 +10,8 @@
     <link rel="stylesheet" href="./assets/bootstrap/css/bootstrap.min.css" />
     <link rel="stylesheet" href="./assets/snackbar.css" />
     <script src="./assets/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="./assets/settings-script.js" defer></script>
+    <link rel="stylesheet" href="./assets/styles.css"></link>
     <title>Settings - Semakan Kelas</title>
   </head>
 
@@ -67,6 +69,8 @@
             <section id="existingClassList"></section>
             <div class="handler mt-3">
               <button class="btn btn-primary gradient m-1" id="save-btn">Save</button>
+              <button class="btn btn-primary gradient m-1" id="import-btn">Import</button>
+              <button class="btn btn-primary gradient m-1" id="export-btn">Export</button>
               <button class="btn btn-primary gradient m-1" id="remove-all-btn">Remove All</button>
             </div>
           </div>
@@ -80,11 +84,7 @@
         </p>
       </div>
     </div>
-
-    <!-- You can also require other files to run in this process -->
-    <script src="./settings-script.js"></script>
-    <link rel="stylesheet" href="./styles.css"></link>
     <div id="print-view-data" class="print-view-data hidden"></div>
-    <div id="snackbar" class="snackbar-danger">Some text some message.</div>
+    <div id="snackbar" class="snackbar">Some text some message.</div>
   </body>
 </html>
