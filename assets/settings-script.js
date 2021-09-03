@@ -92,6 +92,42 @@ document.getElementById('add-btn').addEventListener('click', () => {
   studentList.value = ''
 })
 
+// Import File input
+document
+  .getElementById('importFileInput')
+  .addEventListener('change', (event) => {
+    const file = event.target.files[0]
+    if (file) {
+      var reader = new FileReader()
+      reader.readAsText(file, 'UTF-8')
+      reader.onload = (evt) => {
+        classList = JSON.parse(evt.target.result)
+        printClass()
+        infoBar.show(null, 'Import fail berjaya')
+      }
+    }
+  })
+
+// Import Button
+document.getElementById('import-btn').addEventListener('click', () => {
+  document.getElementById('importFileInput').click()
+})
+
+// Export Button
+document.getElementById('export-btn').addEventListener('click', () => {
+  var dataStr = 'data:text/json;charset=utf-8,' + JSON.stringify(classList)
+  var dlAnchorElem = document.createElement('a')
+  dlAnchorElem.setAttribute('href', dataStr)
+  dlAnchorElem.setAttribute(
+    'download',
+    'Exported_' +
+      'Semak_Kelas_' +
+      new Date().toDateString().slice(4).replace(/\s+/g, '_') +
+      '.json'
+  )
+  dlAnchorElem.click()
+})
+
 api.ipcRenderer.invoke('getStoreValue', 'classList').then((result) => {
   if (!result) return
 
