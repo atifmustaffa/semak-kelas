@@ -78,8 +78,14 @@ table td:not(:last-child) {
   -webkit-animation: Gradient 15s ease infinite;
   -moz-animation: Gradient 15s ease infinite;
   animation: Gradient 15s ease infinite;
+
+  /* animation-name: backgroundColorPalette;
+  animation-duration: 5s;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+  animation-timing-function: linear;
   -webkit-box-shadow: 0 0.25rem 0.25rem 0 rgb(15 30 150 / 20%);
-  box-shadow: 0 0.25rem 0.25rem 0 rgb(15 30 150 / 20%);
+  box-shadow: 0 0.25rem 0.25rem 0 rgb(15 30 150 / 20%); */
 }
 
 .content {
@@ -126,14 +132,34 @@ button {
   -webkit-text-fill-color: transparent;
 }
 
-.gradient-blue {
+.gradient-blue,
+.gradient-pink:hover {
   background-image: -webkit-linear-gradient(210deg, #7e8dff, #61ceff);
   background-image: linear-gradient(210deg, #7e8dff, #61ceff);
 }
 
-.gradient-red {
+.gradient-green,
+.gradient-blue:hover {
+  background-image: -webkit-linear-gradient(210deg, #56ecbd, #5ab14f);
+  background-image: linear-gradient(210deg, #56ecbd, #5ab14f);
+}
+
+.gradient-yellow,
+.gradient-green:hover {
+  background-image: -webkit-linear-gradient(210deg, #e4c34c, #d8a03b);
+  background-image: linear-gradient(210deg, #e4c34c, #d8a03b);
+}
+
+.gradient-red,
+.gradient-yellow:hover {
   background-image: -webkit-linear-gradient(210deg, #e86b98, #bb4969);
   background-image: linear-gradient(210deg, #e86b98, #bb4969);
+}
+
+.gradient-pink,
+.gradient-red:hover {
+  background-image: -webkit-linear-gradient(210deg, #34a1ff, #e44cb5);
+  background-image: linear-gradient(210deg, #34a1ff, #e44cb5);
 }
 
 .table {
@@ -165,4 +191,49 @@ button {
 .print-view-data .table-hover > tbody > tr:hover {
   background: transparent;
   --bs-table-accent-bg: transparent;
+}
+
+@keyframes backgroundColorPalette {
+  0% {
+    /* background-image: -webkit-linear-gradient(210deg, #7e8dff, #61ceff); */
+    /* background-image: linear-gradient(210deg, #7e8dff, #61ceff); */
+    background: #ee6055;
+  }
+  25% {
+    /* background-image: -webkit-linear-gradient(210deg, #56ecbd, #5ab14f); */
+    /* background-image: linear-gradient(210deg, #56ecbd, #5ab14f); */
+    background: #60d394;
+  }
+  50% {
+    /* background-image: -webkit-linear-gradient(210deg, #e4c34c, #d8a03b); */
+    /* background-image: linear-gradient(210deg, #e4c34c, #d8a03b); */
+    background: #aaf683;
+  }
+  75% {
+    /* background-image: -webkit-linear-gradient(210deg, #e86b98, #bb4969); */
+    /* background-image: linear-gradient(210deg, #e86b98, #bb4969); */
+    background: #ffd97d;
+  }
+  100% {
+    /* background-image: -webkit-linear-gradient(210deg, #e86b98, #bb4969); */
+    /* background-image: linear-gradient(210deg, #34a1ff, #e44cb5); */
+    background: #ff9b85;
+  }
+}
+@keyframes Gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  25% {
+    background-position: 25% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  75% {
+    background-position: 25% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
