@@ -48,7 +48,9 @@
           </div>
         </div>
         <div class="status">
-          <p id="status-info"></p>
+          <span id="loading-spinner" class="spinner-border text-info hidden" role="status"></span>
+          <div id="status-info">
+          </div>
         </div>
         <div id="view-data" class="view-data hidden">
           <p id="filename"></p>
@@ -58,7 +60,6 @@
           </table>
         </div>
         <div class="handler">
-          <button class="btn btn-primary gradient m-1" id="view-btn" disabled="true">View</button>
           <button class="btn btn-primary gradient m-1" id="print-btn" disabled="true">Print</button>
           <button class="btn btn-primary gradient m-1" id="download-btn" disabled="true">Download</button>
         </div>

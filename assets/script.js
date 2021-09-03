@@ -158,9 +158,9 @@ let updatedContents = null
 document.getElementById('file-upload').addEventListener('change', (event) => {
   document.getElementById('view-data').className = 'view-data hidden'
   document.getElementById('download-btn').disabled = true
-  document.getElementById('view-btn').disabled = true
   document.getElementById('print-btn').disabled = true
   updatedContents = null
+  document.getElementById('loading-spinner').classList.remove('hidden')
   const file = event.target.files[0]
   if (file) {
     uploadedFile = file
@@ -264,6 +264,7 @@ const createView = () => {
     })
     tableElement.append(tbody)
     document.getElementById('print-btn').disabled = false
+    document.getElementById('loading-spinner').classList.add('hidden')
   }
 }
 // Download Button
