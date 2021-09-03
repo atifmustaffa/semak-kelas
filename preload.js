@@ -1,7 +1,7 @@
 // All of the Node.js APIs are available in the preload process.
 // It has the same sandbox as a Chrome extension.
 
-const { contextBridge, ipcRenderer } = require('electron')
+const { shell, contextBridge, ipcRenderer } = require('electron')
 const { BrowserWindow } = require('@electron/remote')
 
 let mainWindow = undefined
@@ -57,6 +57,11 @@ window.addEventListener('DOMContentLoaded', () => {
   }
 })
 
+const handleExternalLinks = (url) => {
+  shell.openExternal(url)
+}
+
 contextBridge.exposeInMainWorld('api', {
   ipcRenderer: ipcRenderer,
+  handleExternalLinks: handleExternalLinks,
 })

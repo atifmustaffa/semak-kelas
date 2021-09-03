@@ -20,7 +20,7 @@ let names = {}
 let classList = []
 api.ipcRenderer.invoke('getStoreValue', 'classList').then((result) => {
   if (!result) return false
-  console.log('retrieved', result.length)
+  console.info('retrieved', result.length)
   // classList = result
   result.map((cls, index) => {
     names[cls.class_name.replace(/\s+/g, '-')] = cls.students_str
@@ -122,7 +122,6 @@ const checkNames = (csvStr) => {
 const appendID = (values) => {
   return values.map((v, index) => {
     if (v['id']) {
-      //   console.log(index, 'has id')
       const tempId = v['id']
       delete v['id']
       v = { id: tempId, ...v }
@@ -276,6 +275,12 @@ document.getElementById('download-btn').addEventListener('click', () => {
     dlAnchorElem.setAttribute('download', 'Checked_' + uploadedFile.name)
     dlAnchorElem.click()
   }
+})
+
+// Dev link
+document.getElementById('dev-link').addEventListener('click', (event) => {
+  event.preventDefault()
+  api.handleExternalLinks('https://twitter.com/atifmustaffa')
 })
 
 // Enable BS Tooltip
