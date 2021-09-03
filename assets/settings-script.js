@@ -1,6 +1,5 @@
-// eslint-disable-next-line no-undef
-let _api = api
-
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-undef */
 let classList = []
 
 const printClass = () => {
@@ -51,10 +50,8 @@ const printClass = () => {
     .forEach((btn) => {
       btn.addEventListener('click', (event) => {
         let index = event.target.getAttribute('data')
-        console.log('delete class', index)
-        classList.splice(index, 1)
+        let removed = classList.splice(index, 1)[0]
         document.querySelector(`.class-form#classDiv${index}`).remove()
-        console.log(classList)
       })
     })
 
@@ -95,38 +92,22 @@ document.getElementById('add-btn').addEventListener('click', () => {
   studentList.value = ''
 })
 
-_api.ipcRenderer.invoke('getStoreValue', 'classList').then((result) => {
-  if (!result) return false
-  console.log('retrieved', result.length)
+api.ipcRenderer.invoke('getStoreValue', 'classList').then((result) => {
+  if (!result) return
+
   classList = result
   printClass()
 })
 
 document.getElementById('save-btn').addEventListener('click', () => {
-  _api.ipcRenderer.invoke('setStoreValue', 'classList', classList).then(() => {
-    console.log('stored')
-    // Get the snackbar DIV
-    var x = document.getElementById('snackbar')
-
-    // Add the "show" class to DIV
-    x.classList.add('show')
-
-    let color = 'gradient-blue'
-    if (x.classList.contains('snackbar-danger')) color = 'gradient-red'
-
-    x.classList.add(color)
-
-    // After 3 seconds, remove the show class from DIV
-    setTimeout(function () {
-      x.classList.remove('show')
-      x.classList.remove(color)
-    }, 3000)
+  api.ipcRenderer.invoke('setStoreValue', 'classList', classList).then(() => {
+    successBar.show()
   })
 })
 
 document.getElementById('remove-all-btn').addEventListener('click', () => {
-  _api.ipcRenderer.invoke('deleteStoreValue', 'classList').then(() => {
-    console.log('removed')
+  api.ipcRenderer.invoke('deleteStoreValue', 'classList').then(() => {
+    infoBar.show(null, 'Semua maklumat telah dipadam')
     classList = []
     printClass()
   })
@@ -137,6 +118,24 @@ var tooltipTriggerList = [].slice.call(
   document.querySelectorAll('[data-bs-toggle="tooltip"]')
 )
 tooltipTriggerList.map(function (tooltipTriggerEl) {
-  // eslint-disable-next-line no-undef
   return new bootstrap.Tooltip(tooltipTriggerEl)
+})
+
+let successBar = new Snackbar({
+  title: 'Successful',
+  message: 'Maklumat telah disimpan',
+  timeout: 2000,
+  class: ['bg-gradient-green'],
+})
+let infoBar = new Snackbar({
+  title: 'Successful',
+  message: 'Proses berjaya',
+  timeout: 2000,
+  class: ['bg-gradient-blue'],
+})
+let failedBar = new Snackbar({
+  title: 'Failed',
+  message: 'Maklumat tidak berjaya dikemaskini',
+  timeout: 2000,
+  class: ['bg-gradient-red'],
 })

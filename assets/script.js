@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-useless-escape */
+/* eslint-disable no-undef */
 
 // This file is required by the index.html file and will
 // be executed in the renderer process for that window.
@@ -17,7 +18,6 @@ if (window.File && window.FileReader && window.FileList && window.Blob) {
 let names = {}
 
 let classList = []
-// eslint-disable-next-line no-undef
 api.ipcRenderer.invoke('getStoreValue', 'classList').then((result) => {
   if (!result) return false
   console.log('retrieved', result.length)
@@ -171,10 +171,10 @@ document.getElementById('file-upload').addEventListener('change', (event) => {
       checkNames(fileContents).then((data) => {
         updatedContents = data
         document.getElementById('download-btn').disabled = false
-        document.getElementById('view-btn').disabled = false
-        document.getElementById('status-info').innerHTML =
-          'Fail berjaya dikemaskini. Sila download atau view fail yang telah diproses.'
-        document.getElementById('status-info').className = 'status-info success'
+        successBar.show()
+        setTimeout(() => {
+          createView()
+        }, 500)
       })
     }
     reader.onerror = function (evt) {
@@ -185,7 +185,7 @@ document.getElementById('file-upload').addEventListener('change', (event) => {
   }
 })
 // Check Button
-document.getElementById('view-btn').addEventListener('click', () => {
+const createView = () => {
   if (uploadedFile && updatedContents) {
     let { info, values } = csv2json(updatedContents)
 
@@ -265,7 +265,7 @@ document.getElementById('view-btn').addEventListener('click', () => {
     tableElement.append(tbody)
     document.getElementById('print-btn').disabled = false
   }
-})
+}
 // Download Button
 document.getElementById('download-btn').addEventListener('click', () => {
   if (uploadedFile && updatedContents) {
@@ -282,6 +282,18 @@ var tooltipTriggerList = [].slice.call(
   document.querySelectorAll('[data-bs-toggle="tooltip"]')
 )
 tooltipTriggerList.map(function (tooltipTriggerEl) {
-  // eslint-disable-next-line no-undef
   return new bootstrap.Tooltip(tooltipTriggerEl)
+})
+
+let successBar = new Snackbar({
+  title: 'Successful',
+  message: 'Fail berjaya dikemaskini',
+  timeout: 2000,
+  class: ['bg-gradient-green'],
+})
+let failedBar = new Snackbar({
+  title: 'Failed',
+  message: 'Fail tidak berjaya dikemaskini',
+  timeout: 2000,
+  class: ['bg-gradient-red'],
 })

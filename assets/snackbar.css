@@ -1,27 +1,68 @@
 /* The snackbar - position it at the top and in the middle of the screen */
-#snackbar {
+.snackbar {
   visibility: hidden; /* Hidden by default. Visible on click */
-  min-width: 250px; /* Set a default minimum width */
-  margin-left: -125px; /* Divide value of min-width by 2 */
+  min-width: 200px; /* Set a default minimum width */
+  /* margin-left: -125px; */ /* Divide value of min-width by 2 */
   background-color: #333; /* Black background color */
   color: #fff; /* White text color */
   text-align: center; /* Centered text */
   border-radius: 12px; /* Rounded borders */
-  padding: 16px; /* Padding */
+  padding: 12px; /* Padding */
   position: fixed; /* Sit on top of the screen */
   z-index: 1; /* Add a z-index if needed */
   left: 50%; /* Center the snackbar */
   top: 80px; /* 80px from the top */
   box-shadow: 0 6px 12px 0 rgb(225 225 225 / 90%); /* Shadow */
+  cursor: pointer;
+}
+
+.snackbar div {
+  padding: 0;
+  margin: 0;
+}
+
+.snackbar .title {
+  font-weight: 700;
+  font-size: 90%;
+}
+
+.snackbar .message {
+  font-weight: 500;
+  font-size: 80%;
+}
+
+.bg-gradient-blue {
+  background-image: -webkit-linear-gradient(210deg, #63c9ff, #9e61ff);
+  background-image: linear-gradient(210deg, #63c9ff, #9e61ff);
+}
+
+.bg-gradient-green {
+  background-image: -webkit-linear-gradient(210deg, #56ecbd, #5ab14f);
+  background-image: linear-gradient(210deg, #56ecbd, #5ab14f);
+}
+
+.bg-gradient-red {
+  background-image: -webkit-linear-gradient(210deg, #e86b98, #bb4969);
+  background-image: linear-gradient(210deg, #e86b98, #bb4969);
 }
 
 /* Show the snackbar when clicking on a button (class added with JavaScript) */
-#snackbar.show {
+.snackbar.show {
   visibility: visible; /* Show the snackbar */
   /* Add animation: Take 0.5 seconds to fade in and out the snackbar.
     However, delay the fade out process for 2.5 seconds */
-  -webkit-animation: fadein 0.3s, fadeout 0.5s 2.5s;
-  animation: fadein 0.3s, fadeout 0.5s 2.5s;
+  /* -webkit-animation: fadein 0.3s, fadeout 0.5s 2.5s;
+  animation: fadein 0.3s, fadeout 0.5s 2.5s; */
+}
+
+.snackbar.fadein {
+  -webkit-animation: fadein 0.3s;
+  animation: fadein 0.3s;
+}
+
+.snackbar.fadeout {
+  -webkit-animation: fadeout 0.3s;
+  animation: fadeout 0.3s;
 }
 
 /* Animations to fade the snackbar in and out */
