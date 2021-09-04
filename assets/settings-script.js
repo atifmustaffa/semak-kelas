@@ -101,7 +101,12 @@ document
       var reader = new FileReader()
       reader.readAsText(file, 'UTF-8')
       reader.onload = (evt) => {
-        classList = JSON.parse(evt.target.result)
+        try {
+          classList = JSON.parse(evt.target.result)
+        } catch (error) {
+          event.target.value = null
+          return
+        }
         printClass()
         infoBar.show(null, 'Import fail berjaya')
       }
