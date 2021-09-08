@@ -28,9 +28,9 @@ const printClass = () => {
           index + 1
         }" name="studentLis${
       index + 1
-    }1" rows="6" data="${index}" placeholder="Nama-nama murid...">${
-      value.students_str
-    }</textarea>
+    }1" rows="6" data="${index}" placeholder="Nama-nama murid...">${value.students.join(
+      '\n'
+    )}</textarea>
       </div>
       <div class="col-md-1 col-sm-12 align-items-end">
         <button class="btn btn-danger m-1" data="${index}" id="deleteBtn${
@@ -75,7 +75,7 @@ const printClass = () => {
       textarea.addEventListener('change', (event) => {
         let index = event.target.getAttribute('data')
         let newValue = event.target.value.trim()
-        classList[index].students_str = newValue
+        classList[index].students = newValue.split('\n')
       })
     })
 }
@@ -85,7 +85,7 @@ document.getElementById('add-btn').addEventListener('click', () => {
   let studentList = document.getElementById('newStudentList')
   classList.push({
     class_name: className.value.trim(),
-    students_str: studentList.value.trim(),
+    students: studentList.value.trim().split('\n'),
   })
   printClass()
   className.value = ''
@@ -136,19 +136,15 @@ document.getElementById('export-btn').addEventListener('click', () => {
 api.ipcRenderer.invoke('getStoreValue', 'classList').then((result) => {
   if (!result) return
 
-  classList = result.map((cls) => {
-    // Sort student name and return back to string
-    cls.students_str = cls.students_str
-      .split('\n')
-      .map((n) => n.trim())
-      .sort()
-      .join('\n')
-    return cls
-  })
+  classList = result
   printClass()
 })
 
 document.getElementById('save-btn').addEventListener('click', () => {
+  classList = classList.map((c) => {
+    c.students = c.students.map((s) => s.trim()).sort()
+    return c
+  })
   api.ipcRenderer.invoke('setStoreValue', 'classList', classList).then(() => {
     successBar.show()
   })

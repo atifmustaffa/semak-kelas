@@ -22,10 +22,8 @@ api.ipcRenderer.invoke('getStoreValue', 'classList').then((result) => {
   if (!result) return false
   console.info('retrieved', result.length)
   // classList = result
-  result.map((cls, index) => {
-    names[cls.class_name.replace(/\s+/g, '-')] = cls.students_str
-      .split('\n')
-      .sort()
+  result.map((cls) => {
+    names[cls.class_name.replace(/\s+/g, '-')] = cls.students
   })
 })
 
@@ -188,7 +186,7 @@ const createView = () => {
   if (uploadedFile && updatedContents) {
     let { info, values } = csv2json(updatedContents)
 
-    values = appendID(values)
+    // Fix last element of empty line
     values.pop()
 
     updatedContents = json2csv(values)
@@ -235,6 +233,26 @@ const createView = () => {
 
     let headerRow = document.createElement('tr')
     let keys = Object.keys(values[0]).filter((k) => k !== '')
+    let nameKey = undefined
+
+    // Find the namekey for sorting
+    for (k of keys) {
+      // Save the first key found with keyword 'name'
+      if (!nameKey && k.toLowerCase().includes('name')) {
+        nameKey = k
+        break
+      }
+    }
+
+    // Sort appended class before insert into element
+    values = _.orderBy(values, [(v) => v[nameKey].trim().toLowerCase()], 'asc')
+
+    // Add ID
+    values = appendID(values)
+
+    // Reset the keys after id append
+    keys = Object.keys(values[0]).filter((k) => k !== '')
+
     keys.forEach((key) => {
       let th = document.createElement('th')
       th.innerText = key
