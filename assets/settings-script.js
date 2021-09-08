@@ -136,7 +136,15 @@ document.getElementById('export-btn').addEventListener('click', () => {
 api.ipcRenderer.invoke('getStoreValue', 'classList').then((result) => {
   if (!result) return
 
-  classList = result
+  classList = result.map((cls) => {
+    // Sort student name and return back to string
+    cls.students_str = cls.students_str
+      .split('\n')
+      .map((n) => n.trim())
+      .sort()
+      .join('\n')
+    return cls
+  })
   printClass()
 })
 
