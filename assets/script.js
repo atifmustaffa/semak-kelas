@@ -16,6 +16,8 @@ if (window.File && window.FileReader && window.FileList && window.Blob) {
 }
 
 let names = {}
+const GoogleMeetAutoAttendanceUrl =
+  'https://chrome.google.com/webstore/detail/google-meet-attendance-li/'
 
 let classList = []
 api.ipcRenderer.invoke('getStoreValue', 'classList').then((result) => {
@@ -29,8 +31,6 @@ api.ipcRenderer.invoke('getStoreValue', 'classList').then((result) => {
 
 const csv2json = (str, delimiter = ',') => {
   // Special for google meet auto attendance; skip first few lines
-  const GoogleMeetAutoAttendanceUrl =
-    'https://chrome.google.com/webstore/detail/google-meet-attendance-li/appcnhiefcidclcdjeahgklghghihfok'
   const linesToRemove = str
     .split('\n')
     .slice(0, 4)
@@ -54,8 +54,6 @@ const csv2json = (str, delimiter = ',') => {
 }
 
 const json2csv = (data, delimiter = ',') => {
-  const GoogleMeetAutoAttendanceUrl =
-    'https://chrome.google.com/webstore/detail/google-meet-attendance-li/appcnhiefcidclcdjeahgklghghihfok'
   const linesToAppend = updatedContents.split('\n').slice(0, 4).join('\n')
   var json = data
   var fields = Object.keys(json[0])
