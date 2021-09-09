@@ -1,18 +1,77 @@
 /* eslint-disable no-unused-vars */
 // Modules to control application life and create native browser window
-const { app, BrowserWindow, ipcMain } = require('electron')
+const { app, BrowserWindow, ipcMain, Menu, shell } = require('electron')
 const path = require('path')
+const pkgJSON = require('./package.json')
 require('@electron/remote/main').initialize()
 const Store = require('electron-store')
 // Enable live reload for Electron too
 if (process.env.APP_DEV) {
   require('electron-reload')(__dirname, {
     // Note that the path to electron may vary according to the main file
-    // electron: require(`${__dirname}/node_modules/electron`)
+    electron: require(`${__dirname}/node_modules/electron`),
   })
 }
 
+const isMac = process.platform === 'darwin'
 let mainWindow = undefined
+const menuTemplate = [
+  {
+    label: 'File',
+    submenu: [isMac ? { role: 'close' } : { role: 'quit' }],
+  },
+  {
+    label: 'Edit',
+    submenu: [
+      { role: 'undo' },
+      { role: 'redo' },
+      { type: 'separator' },
+      { role: 'cut' },
+      { role: 'copy' },
+      { role: 'paste' },
+      ...(isMac
+        ? [
+            { role: 'pasteAndMatchStyle' },
+            { role: 'delete' },
+            { role: 'selectAll' },
+            { type: 'separator' },
+            {
+              label: 'Speech',
+              submenu: [{ role: 'startSpeaking' }, { role: 'stopSpeaking' }],
+            },
+          ]
+        : [{ role: 'delete' }, { type: 'separator' }, { role: 'selectAll' }]),
+    ],
+  },
+  {
+    label: 'View',
+    submenu: [
+      { role: 'reload' },
+      { role: 'forceReload' },
+      { role: 'toggleDevTools' },
+      { type: 'separator' },
+      { role: 'resetZoom' },
+      { role: 'zoomIn' },
+      { role: 'zoomOut' },
+      { type: 'separator' },
+      { role: 'togglefullscreen' },
+    ],
+  },
+  {
+    role: 'help',
+    submenu: [
+      {
+        label: 'Developer',
+        click: async () => {
+          shell.openExternal(pkgJSON.author_link)
+        },
+      },
+      {
+        label: 'Version ' + pkgJSON.version,
+      },
+    ],
+  },
+]
 
 function createWindow() {
   // Create the browser window.
@@ -36,6 +95,9 @@ function createWindow() {
     mainWindow.webContents.openDevTools()
     console.log('Running in development')
   }
+
+  let menu = Menu.buildFromTemplate(menuTemplate)
+  Menu.setApplicationMenu(menu)
 }
 
 // This method will be called when Electron has finished
@@ -55,7 +117,7 @@ app.whenReady().then(() => {
 // for applications and their menu bar to stay active until the user quits
 // explicitly with Cmd + Q.
 app.on('window-all-closed', function () {
-  if (process.platform !== 'darwin') app.quit()
+  if (!isMac) app.quit()
 })
 
 // In this file you can include the rest of your app's specific main process

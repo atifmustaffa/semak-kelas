@@ -1,14 +1,14 @@
 {
   "name": "electron-quick-start",
   "version": "1.0.0",
-  "description": "A minimal Electron application",
+  "description": "A minimal Electron application for Google Meet students attendance",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
     "dev": "set APP_DEV=true && electron . ",
     "package": "electron-packager ./ Semakan_Kelas --platform=win32 --arch=x64 --icon assets/student.ico"
   },
-  "repository": "https://github.com/electron/electron-quick-start",
+  "repository": "https://github.com/atifmustaffa/semak-kelas",
   "keywords": [
     "Electron",
     "quick",
@@ -16,7 +16,8 @@
     "tutorial",
     "demo"
   ],
-  "author": "GitHub",
+  "author": "Atif Mustaffa",
+  "author_link": "https://twitter.com/atifmustaffa",
   "license": "CC0-1.0",
   "devDependencies": {
     "electron": "^13.2.1"
