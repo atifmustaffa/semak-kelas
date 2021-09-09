@@ -151,11 +151,24 @@ document.getElementById('save-btn').addEventListener('click', () => {
 })
 
 document.getElementById('remove-all-btn').addEventListener('click', () => {
-  api.ipcRenderer.invoke('deleteStoreValue', 'classList').then(() => {
-    infoBar.show(null, 'Semua maklumat telah dipadam')
-    classList = []
-    printClass()
-  })
+  api.dialog
+    .showMessageBox({
+      title: 'Remove All',
+      type: 'warning',
+      message: 'Are you sure to remove all data?',
+      detail: 'This process cannot be undone.',
+      buttons: ['Yes', 'No'],
+    })
+    .then((response) => {
+      if (response && response.response === 0) {
+        // Yes
+        api.ipcRenderer.invoke('deleteStoreValue', 'classList').then(() => {
+          infoBar.show(null, 'Semua maklumat telah dipadam')
+          classList = []
+          printClass()
+        })
+      }
+    })
 })
 
 // Enable BS Tooltip

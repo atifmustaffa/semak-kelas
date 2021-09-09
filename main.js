@@ -1,7 +1,6 @@
 /* eslint-disable no-unused-vars */
 // Modules to control application life and create native browser window
 const { app, BrowserWindow, ipcMain } = require('electron')
-// const { isDev } = require('electron-is-dev')
 const path = require('path')
 require('@electron/remote/main').initialize()
 const Store = require('electron-store')

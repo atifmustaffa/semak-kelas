@@ -2,20 +2,12 @@
 // It has the same sandbox as a Chrome extension.
 
 const { shell, contextBridge, ipcRenderer } = require('electron')
-const { BrowserWindow } = require('@electron/remote')
+const { BrowserWindow, dialog } = require('@electron/remote')
 
 let mainWindow = undefined
 
 window.addEventListener('DOMContentLoaded', () => {
   mainWindow = BrowserWindow.getAllWindows()[0]
-  const replaceText = (selector, text) => {
-    const element = document.getElementById(selector)
-    if (element) element.innerText = text
-  }
-
-  for (const type of ['chrome', 'node', 'electron']) {
-    replaceText(`${type}-version`, process.versions[type])
-  }
 
   // button print
   const printBtn = document.getElementById('print-btn')
@@ -71,5 +63,6 @@ const handleExternalLinks = (anchorElem) => {
 
 contextBridge.exposeInMainWorld('api', {
   ipcRenderer: ipcRenderer,
+  dialog: dialog,
   handleExternalLinks: handleExternalLinks,
 })
