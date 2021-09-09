@@ -5,6 +5,7 @@
   "main": "main.js",
   "scripts": {
     "start": "electron .",
+    "dev": "set APP_DEV=true && electron . ",
     "package": "electron-packager ./ Semakan_Kelas --platform=win32 --arch=x64 --icon assets/student.ico"
   },
   "repository": "https://github.com/electron/electron-quick-start",

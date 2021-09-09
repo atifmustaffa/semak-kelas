@@ -1,14 +1,17 @@
 /* eslint-disable no-unused-vars */
 // Modules to control application life and create native browser window
 const { app, BrowserWindow, ipcMain } = require('electron')
+// const { isDev } = require('electron-is-dev')
 const path = require('path')
 require('@electron/remote/main').initialize()
 const Store = require('electron-store')
 // Enable live reload for Electron too
-require('electron-reload')(__dirname, {
-  // Note that the path to electron may vary according to the main file
-  // electron: require(`${__dirname}/node_modules/electron`)
-})
+if (process.env.APP_DEV) {
+  require('electron-reload')(__dirname, {
+    // Note that the path to electron may vary according to the main file
+    // electron: require(`${__dirname}/node_modules/electron`)
+  })
+}
 
 let mainWindow = undefined
 
@@ -30,7 +33,10 @@ function createWindow() {
   mainWindow.loadURL(`file://${__dirname}/index.html`)
 
   // Open the DevTools.
-  // mainWindow.webContents.openDevTools()
+  if (process.env.APP_DEV) {
+    mainWindow.webContents.openDevTools()
+    console.log('Running in development')
+  }
 }
 
 // This method will be called when Electron has finished
