@@ -1,14 +1,14 @@
 {
-  "name": "electron-quick-start",
+  "name": "semak-kelas",
   "version": "1.0.0",
   "description": "A minimal Electron application for Google Meet students attendance",
+  "repository": "https://github.com/atifmustaffa/semak-kelas",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
     "dev": "set APP_DEV=true && electron . ",
     "package": "electron-packager ./ Semakan_Kelas --platform=win32 --arch=x64 --icon assets/student.ico"
   },
-  "repository": "https://github.com/atifmustaffa/semak-kelas",
   "keywords": [
     "Electron",
     "quick",
@@ -28,5 +28,22 @@
     "electron-reload": "^2.0.0-alpha.1",
     "electron-store": "^8.0.0",
     "update-electron-app": "^2.0.1"
+  },
+  "config": {
+    "forge": {
+      "packagerConfig": {},
+      "publishers": [
+        {
+          "name": "@electron-forge/publisher-github",
+          "config": {
+            "repository": {
+              "owner": "atifmustaffa",
+              "name": "semak-kelas"
+            }
+          },
+          "draf": true
+        }
+      ]
+    }
   }
 }
