@@ -193,9 +193,33 @@ button {
   --bs-table-accent-bg: transparent;
 }
 
+input[name='userName'] {
+  min-width: 90px;
+  max-width: 380px;
+  border: 0px;
+  background: transparent;
+  text-align: end;
+  text-transform: capitalize;
+  color: #fff;
+  padding: 6px 0px;
+}
+input[name='userName']:focus {
+  background: #fff;
+  text-align: center;
+  padding: 6px 12px;
+}
+
 @media (max-width: 992px) {
   .navbar-collapse:not(.show) + .user-client {
     display: none;
+  }
+  .navbar-collapse.show + .user-client {
+    text-align: left;
+    padding: 6px 0px;
+  }
+  .navbar-collapse.show + .user-client:focus {
+    text-align: left;
+    padding: 6px 12px;
   }
 }
 

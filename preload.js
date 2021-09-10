@@ -54,6 +54,42 @@ window.addEventListener('DOMContentLoaded', () => {
       handleExternalLinks(event.target)
     })
   })
+  // Update name
+  const userClientEl = document.getElementById('userClient')
+  ipcRenderer.invoke('getStoreValue', 'userClient').then((result) => {
+    userClientEl.value = result || 'Atif'
+    userClientEl.style.width = (userClientEl.value.length + 1) * 8 + 16 + 'px'
+  })
+  let tempName = ''
+  userClientEl.addEventListener('focus', (event) => {
+    tempName = event.target.value
+  })
+  userClientEl.addEventListener('blur', (event) => {
+    if (!event.target.value || event.target.value === '') {
+      event.target.value = tempName
+      return
+    }
+    event.target.disabled = true
+    // Set timeout to prevent multiple changes incase of misclick and give time to store data
+    let to = setTimeout(() => {
+      event.target.disabled = false
+    }, 2000)
+    ipcRenderer
+      .invoke('setStoreValue', 'userClient', event.target.value)
+      .then(() => {
+        event.target.disabled = false
+        clearTimeout(to)
+      })
+      .catch((e) => {
+        console.error(e)
+        event.target.disabled = false
+        clearTimeout(to)
+      })
+  })
+  userClientEl.addEventListener('keyup', function (event) {
+    event.target.style.width = (event.target.value.length + 1) * 8 + 16 + 'px'
+    if (event.key === 'Enter') this.blur()
+  })
 })
 
 const handleExternalLinks = (anchorElem) => {
