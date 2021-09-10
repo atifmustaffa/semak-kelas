@@ -1,8 +1,9 @@
 /* eslint-disable no-unused-vars */
 // Modules to control application life and create native browser window
-const { app, BrowserWindow } = require('electron')
+const { app, BrowserWindow, ipcMain } = require('electron')
 const path = require('path')
 require('@electron/remote/main').initialize()
+const Store = require('electron-store')
 // Enable live reload for Electron too
 require('electron-reload')(__dirname, {
   // Note that the path to electron may vary according to the main file
@@ -14,10 +15,11 @@ let mainWindow = undefined
 function createWindow() {
   // Create the browser window.
   mainWindow = new BrowserWindow({
-    width: 1000,
-    height: 800,
+    width: 1280,
+    height: 720,
     webPreferences: {
       enableRemoteModule: true,
+      contextIsolation: true,
       preload: path.join(__dirname, 'preload.js'),
     },
   })
@@ -67,3 +69,17 @@ app.on('window-all-closed', function () {
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
+
+const store = new Store()
+
+ipcMain.handle('getStoreValue', (event, key) => {
+  return store.get(key)
+})
+
+ipcMain.handle('setStoreValue', (event, key, value) => {
+  return store.set(key, value)
+})
+
+ipcMain.handle('deleteStoreValue', (event, key) => {
+  return store.delete(key)
+})

@@ -14,12 +14,20 @@ if (window.File && window.FileReader && window.FileList && window.Blob) {
   alert('The File APIs are not fully supported in this browser.')
 }
 
+let names = {}
 
-let names = {
-  '3m': str3m.split('\n').sort(),
-  '3t': str3t.split('\n').sort(),
-  '2t': str2t.split('\n').sort(),
-}
+let classList = []
+// eslint-disable-next-line no-undef
+api.ipcRenderer.invoke('getStoreValue', 'classList').then((result) => {
+  if (!result) return false
+  console.log('retrieved', result.length)
+  // classList = result
+  result.map((cls, index) => {
+    names[cls.class_name.replace(/\s+/g, '-')] = cls.students_str
+      .split('\n')
+      .sort()
+  })
+})
 
 const csv2json = (str, delimiter = ',') => {
   // Special for google meet auto attendance; skip first few lines
