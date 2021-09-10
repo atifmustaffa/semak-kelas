@@ -7,7 +7,8 @@
   "scripts": {
     "start": "set NODE_ENV=production && electron .",
     "dev": "set APP_DEV=true && electron . ",
-    "package": "electron-packager ./ Semakan_Kelas --platform=win32 --arch=x64 --icon assets/student.ico"
+    "package": "electron-packager ./ Semak_Kelas --overwrite --platform=win32 --arch=x64 --icon assets/student.ico --out=release-builds",
+    "build": "npm run package && node build.js"
   },
   "keywords": [
     "Electron",
@@ -19,10 +20,11 @@
   "author": "Atif Mustaffa",
   "author_link": "https://twitter.com/atifmustaffa",
   "license": "CC0-1.0",
-  "devDependencies": {},
+  "devDependencies": {
+    "electron": "^13.2.1"
+  },
   "dependencies": {
     "@electron/remote": "^1.2.1",
-    "electron": "^13.2.1",
     "electron-packager": "^15.3.0",
     "electron-reload": "^2.0.0-alpha.1",
     "electron-squirrel-startup": "^1.0.0",
