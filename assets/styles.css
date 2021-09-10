@@ -193,6 +193,12 @@ button {
   --bs-table-accent-bg: transparent;
 }
 
+@media (max-width: 992px) {
+  .navbar-collapse:not(.show) + .user-client {
+    display: none;
+  }
+}
+
 @keyframes backgroundColorPalette {
   0% {
     /* background-image: -webkit-linear-gradient(210deg, #7e8dff, #61ceff); */
