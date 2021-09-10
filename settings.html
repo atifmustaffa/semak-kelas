@@ -5,31 +5,28 @@
     <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
     <meta
       http-equiv="Content-Security-Policy"
-      content="default-src 'self'; script-src 'self'; img-src 'self' data:"
+      content="default-src 'self'; script-src 'self'"
     />
     <link rel="stylesheet" href="./assets/bootstrap/css/bootstrap.min.css" />
     <script src="./assets/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <title>Semakan Kelas</title>
+    <title>Semakan Kelas - Settings</title>
   </head>
 
   <body class="bg-gray">
     <div class="header-area sticky">
       <div class="container-lg my-0 p-0">
-        <nav class="navbar navbar-expand-lg navbar-dark">
+        <nav class="navbar navbar-light">
           <div class="container-fluid">
-            <a class="navbar-brand text-white fw-bold">Semakan Nama Pelajar</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-              <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-              <ul class="navbar-nav">
+            <a class="navbar-brand text-white">Semak Nama Pelajar</a>
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                  <a class="nav-link active" aria-current="page" href="#">Home</a>
+                    <a class="nav-link" aria-current="page" href="index.html">Home</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="#">Settings</a>
+                    <a class="nav-link active" aria-current="page" href="#">Settings</a>
                 </li>
-              </ul>
+                </ul>
             </div>
           </div>
         </nav>
@@ -47,22 +44,20 @@
           <p id="status-info"></p>
         </div>
         <div id="view-data" class="view-data hidden">
-          <p id="filename"></p>
           <p id="meeting-code"></p>
           <p id="created-time"></p>
-          <table id="name-table" class="table table-hover">
-          </table>
+          <table id="name-table"></table>
         </div>
         <div class="handler">
-          <button class="btn btn-primary gradient m-1" id="view-btn" disabled="true">View</button>
-          <button class="btn btn-primary gradient m-1" id="print-btn" disabled="true">Print</button>
-          <button class="btn btn-primary gradient m-1" id="download-btn" disabled="true">Download</button>
+          <button class="btn btn-primary m-1" id="view-btn" disabled="true">View</button>
+          <button class="btn btn-primary m-1" id="print-btn" disabled="true">Print</button>
+          <button class="btn btn-primary m-1" id="download-btn" disabled="true">Download</button>
         </div>
       </div>
       <div class="footer">
         <p>
           By
-          <a class="text-gradient gradient-blue" href="https://www.github.com/atifmustaffa" target="_blank" data-bs-toggle="tooltip" title="Check him out">Atif Mustaffa</a
+          <a class="text-gradient gradient-blue" href="https://www.github.com/atifmustaffa" target="_blank">Atif Mustaffa</a
           >
         </p>
       </div>
@@ -71,6 +66,5 @@
     <!-- You can also require other files to run in this process -->
     <script src="./script.js"></script>
     <link rel="stylesheet" href="./styles.css"></link>
-    <div id="print-view-data" class="print-view-data hidden"></div>
   </body>
 </html>

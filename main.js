@@ -1,19 +1,23 @@
+/* eslint-disable no-unused-vars */
 // Modules to control application life and create native browser window
 const { app, BrowserWindow } = require('electron')
 const path = require('path')
-
+require('@electron/remote/main').initialize()
 // Enable live reload for Electron too
 require('electron-reload')(__dirname, {
   // Note that the path to electron may vary according to the main file
   // electron: require(`${__dirname}/node_modules/electron`)
 })
 
+let mainWindow = undefined
+
 function createWindow() {
   // Create the browser window.
-  const mainWindow = new BrowserWindow({
-    width: 800,
-    height: 600,
+  mainWindow = new BrowserWindow({
+    width: 1000,
+    height: 800,
     webPreferences: {
+      enableRemoteModule: true,
       preload: path.join(__dirname, 'preload.js'),
     },
   })
@@ -24,6 +28,21 @@ function createWindow() {
 
   // Open the DevTools.
   // mainWindow.webContents.openDevTools()
+
+  // workerWindow = new BrowserWindow()
+  // workerWindow.setTitle('workerwindow')
+  // workerWindow.loadURL('file://' + __dirname + '/printerWindow.html')
+  // workerWindow.hide()
+
+  // mainWindow.on('closed', () => {
+  //   // close worker windows later
+  //   mainWindow = undefined
+  //   workerWindow.close()
+  // })
+
+  // workerWindow.on('closed', () => {
+  //   workerWindow = undefined
+  // })
 }
 
 // This method will be called when Electron has finished
