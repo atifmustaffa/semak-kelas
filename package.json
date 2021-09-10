@@ -8,7 +8,11 @@
     "start": "set NODE_ENV=production && electron .",
     "dev": "set APP_DEV=true && electron . ",
     "package": "electron-packager ./ Semak_Kelas --overwrite --platform=win32 --arch=x64 --icon assets/student.ico --out=release-builds",
-    "build": "npm run package && node build.js"
+    "build": "npm run package && node build.js",
+    "release-it": "dotenv -- release-it --ci",
+    "preversion": "",
+    "version": "npm run package && npm run build",
+    "postversion": ""
   },
   "keywords": [
     "Electron",
