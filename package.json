@@ -5,7 +5,7 @@
   "repository": "https://github.com/atifmustaffa/semak-kelas",
   "main": "main.js",
   "scripts": {
-    "start": "electron .",
+    "start": "set NODE_ENV=production && electron .",
     "dev": "set APP_DEV=true && electron . ",
     "package": "electron-packager ./ Semakan_Kelas --platform=win32 --arch=x64 --icon assets/student.ico"
   },
@@ -19,31 +19,20 @@
   "author": "Atif Mustaffa",
   "author_link": "https://twitter.com/atifmustaffa",
   "license": "CC0-1.0",
-  "devDependencies": {
-    "electron": "^13.2.1"
-  },
+  "devDependencies": {},
   "dependencies": {
     "@electron/remote": "^1.2.1",
+    "electron": "^13.2.1",
     "electron-packager": "^15.3.0",
     "electron-reload": "^2.0.0-alpha.1",
+    "electron-squirrel-startup": "^1.0.0",
     "electron-store": "^8.0.0",
+    "electron-winstaller": "^5.0.0",
     "update-electron-app": "^2.0.1"
   },
   "config": {
     "forge": {
-      "packagerConfig": {},
-      "publishers": [
-        {
-          "name": "@electron-forge/publisher-github",
-          "config": {
-            "repository": {
-              "owner": "atifmustaffa",
-              "name": "semak-kelas"
-            }
-          },
-          "draf": true
-        }
-      ]
+      "packagerConfig": {}
     }
   }
 }

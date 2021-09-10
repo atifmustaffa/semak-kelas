@@ -14,6 +14,9 @@ if (process.env.APP_DEV) {
   })
 }
 
+// Fix multiple instance of windows squirrel installer
+if (require('electron-squirrel-startup')) return app.quit()
+
 const isMac = process.platform === 'darwin'
 let mainWindow = undefined
 const menuTemplate = [
