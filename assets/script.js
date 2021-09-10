@@ -29,6 +29,12 @@ api.ipcRenderer.invoke('getStoreValue', 'classList').then((result) => {
   })
 })
 
+let teacher_name = ''
+api.ipcRenderer.invoke('getStoreValue', 'userClient').then((result) => {
+  if (!result || result === '') return false
+  teacher_name = result
+})
+
 const csv2json = (str, delimiter = ',') => {
   // Special for google meet auto attendance; skip first few lines
   const linesToRemove = str
@@ -272,6 +278,9 @@ const createView = () => {
         if (val[key] && val[key].trim() !== '') {
           let td = document.createElement('td')
           td.innerText = val[key].trim()
+          if (td.innerText.toLowerCase().includes(teacher_name.toLowerCase())) {
+            td.style.textDecoration = 'line-through'
+          }
           tr.append(td)
         }
       })
